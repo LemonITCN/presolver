@@ -9,6 +9,12 @@ class QuestionData:
     dimensionY = 0
     draw_function_list = []
     original_data = []
+    # 候选数字，三维数组
+    candidate_data = []
+    # 引擎不断填入尝试各种数字后产生的数据
+    calculate_data = []
+    # 答案数据范围，就是最基础题目规则中每个格子的答案范围，如九宫标准数独的答案范围是:1,2,3,4,5,6,7,8,9
+    answer_range = []
     answer_data = []
     rules_list = []
 
@@ -24,5 +30,6 @@ class QuestionData:
         self.dimensionY = 0
         self.draw_function_list = []
         self.original_data = []
+        self.calculate_data = []
         self.answer_data = []
         self.rules_list = []

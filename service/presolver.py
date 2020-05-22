@@ -4,12 +4,13 @@ import openpyxl
 
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
+from service.resolver_1900 import Resolver1900
 
 
 class PResolver:
     @staticmethod
-    def read_excel(excel_file_path):
-        print('start read excel')
+    def read_excel(excel_file_path: str) -> []:
+        print('开始读取Excel中的题目数据...')
         workbook = openpyxl.load_workbook(excel_file_path)
         row_index = 0
         question_pool = {}
@@ -37,22 +38,24 @@ class PResolver:
                     draw_function.data = row[6].value
                     draw_function.parameters = row[7].value
                     question_data.draw_function_list.append(draw_function)
-                    # 发现是DBN函数，开始读取题目原始数据
-                    if draw_function.function_name == 'DBN':
-                        for y in range(question_data.dimensionY):
-                            for x in range(question_data.dimensionX):
-                                if len(question_data.original_data) == y:
-                                    question_data.original_data.append([])
-                                num_index = y * question_data.dimensionX + x
-                                if num_index < len(row[6].value):
-                                    question_data.original_data[y].append(row[6].value[num_index])
             row_index = row_index + 1
         return question_pool.values()
 
     @staticmethod
-    def calculate_answer(question_data):
-        logging.info('start calculate answer')
+    def calculate_answer(question_data: QuestionData):
+        logging.info('【静态调用】开始计算题目答案：' + question_data.question_key)
+        if question_data.question_key.startswith('1900'):
+            resolver = Resolver1900(question_data)
+            resolver.calculate_original_data()
+            resolver.improve_data()
+            resolver.calculate_rules()
+            resolver.filter_all_rules_candidate_data()
+            resolver.calculate_answer()
+        else:
+            print('暂不支持次此题型')
 
     @staticmethod
-    def calculate_answer_list(question_data_list):
+    def calculate_answer_list(question_data_list: []):
         logging.info('start calculate answer list')
+        for question in question_data_list:
+            PResolver.calculate_answer(question)

@@ -13,6 +13,5 @@ class RuleBase:
 
     # 过滤待选数字，根据自身规则及参数，对待选数字进行过滤筛选
     def filter_candidate_data(self) -> int:
-        print('开始使用规则进行待选数字过滤:' + self.question_data.question_key)
         return 0
         pass

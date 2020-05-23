@@ -1,3 +1,5 @@
+import time
+
 from model.question_data import QuestionData
 
 
@@ -43,14 +45,15 @@ class ResolverBase:
             filtered_count = filtered_count + rule.filter_candidate_data()
         return filtered_count
 
-    def calculate_check_current(self) -> bool:
-        print("开始检查当前生成的答案是否正确：" + self.question_data.question_key)
-        for rule in self.question_data.rules_list:
-            if not rule.check():
-                return False
+    # def calculate_check_current(self) -> bool:
+    #     print("开始检查当前生成的答案是否正确：" + self.question_data.question_key)
+    #     for rule in self.question_data.rules_list:
+    #         if not rule.check():
+    #             return False
 
     def calculate_answer(self):
         print("开始求解题目答案：" + self.question_data.question_key)
+        start_time = int(round(time.time() * 1000))
         self.calculate_original_data()
         self.improve_data()
         self.calculate_rules()
@@ -58,6 +61,7 @@ class ResolverBase:
         while this_time_filter_count != 0:
             this_time_filter_count = self.filter_all_rules_candidate_data()
         self.question_data.calculate_answer = []
+        self.question_data.need_calculate_location_list = []
         for y in range(self.question_data.dimensionY):
             if len(self.question_data.calculate_data) == y:
                 self.question_data.calculate_data.append([])
@@ -68,12 +72,16 @@ class ResolverBase:
                     self.question_data.calculate_data[y].append('')
                 else:
                     self.question_data.calculate_data[y].append(self.question_data.candidate_data[y][x][0])
-        print('待计算单元格数量：' + str(len(self.question_data.need_calculate_location_list)))
-        self.calculate_answer_frame(0)
+        print('开始计算题目[' + self.question_data.question_key + ']待计算单元格数量：' + str(
+            len(self.question_data.need_calculate_location_list)))
+        if self.calculate_answer_frame(0):
+            print('题目成功计算出答案：' + self.question_data.question_key + ', 耗时：' + str(
+                int(round(time.time() * 1000)) - start_time) + 'ms')
+        else:
+            print('题目计算答案失败，无解：' + self.question_data.question_key)
         pass
 
     def calculate_answer_frame(self, calculate_index: int):
-        print('计算单元格索引:' + str(calculate_index))
         if calculate_index == len(self.question_data.need_calculate_location_list):
             self.question_data.answer_data = self.question_data.calculate_data
             return True
@@ -84,6 +92,9 @@ class ResolverBase:
                 # 当前帧计算通过
                 if self.calculate_answer_frame(calculate_index + 1):
                     return True
+            else:
+                self.question_data.calculate_data[this_location[1]][this_location[0]] = ''
+        self.question_data.calculate_data[this_location[1]][this_location[0]] = ''
         return False
 
     def check_frame(self, calculate_index: int):

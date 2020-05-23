@@ -17,6 +17,9 @@ class QuestionData:
     answer_range = []
     answer_data = []
     rules_list = []
+    # 规则关系map，坐标:单元格所拥有的关系数组
+    rules_relation_map = {}
+    need_calculate_location_list = []
 
     def __init__(self) -> None:
         super().__init__()

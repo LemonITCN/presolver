@@ -46,10 +46,6 @@ class PResolver:
         logging.info('【静态调用】开始计算题目答案：' + question_data.question_key)
         if question_data.question_key.startswith('1900'):
             resolver = Resolver1900(question_data)
-            resolver.calculate_original_data()
-            resolver.improve_data()
-            resolver.calculate_rules()
-            resolver.filter_all_rules_candidate_data()
             resolver.calculate_answer()
         else:
             print('暂不支持次此题型')

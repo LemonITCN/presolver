@@ -2,7 +2,7 @@ from model.question_data import QuestionData
 from service.rule_base import RuleBase
 
 
-class RuleNumMutex(RuleBase):
+class RuleItemMutex(RuleBase):
     location_list = []
 
     # params format: 互斥的单元格坐标列表，坐标之间用分号分隔，每个坐标的xy之间用英文半角逗号分隔
@@ -12,6 +12,8 @@ class RuleNumMutex(RuleBase):
         super().__init__(question_data, params)
         self.location_list = []
         for location in params.split(';'):
+            if location == '':
+                continue
             location_x = int(location.split(',')[0])
             location_y = int(location.split(',')[1])
             this_location = [location_x, location_y]
@@ -36,19 +38,19 @@ class RuleNumMutex(RuleBase):
         exists_item_list = []
         # 提取当前规则范围内的已知数字
         for location in self.location_list:
-            this_value = self.question_data.original_data[location[1]][location[0]]
+            this_value = self.question_data.filtered_original_data[location[1]][location[0]]
             if not this_value == '':
                 exists_item_list.append(this_value)
         filtered_count = 0
         # 去除、过滤已知数字
         for location in self.location_list:
-            this_value = self.question_data.original_data[location[1]][location[0]]
+            this_value = self.question_data.filtered_original_data[location[1]][location[0]]
             if this_value == '':
                 for exists_item in exists_item_list:
                     if exists_item in self.question_data.candidate_data[location[1]][location[0]]:
                         self.question_data.candidate_data[location[1]][location[0]].remove(exists_item)
                         if len(self.question_data.candidate_data[location[1]][location[0]]) == 1:
-                            self.question_data.original_data[location[1]][location[0]] = \
+                            self.question_data.filtered_original_data[location[1]][location[0]] = \
                                 self.question_data.candidate_data[location[1]][location[0]][0]
                         filtered_count = filtered_count + 1
         return filtered_count

@@ -2,11 +2,11 @@ from service.resolver_base import ResolverBase
 from service.rule_item_mutex import RuleItemMutex
 
 
-class Resolver1900(ResolverBase):
+class Resolver1924(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     def get_answer_range(self) -> []:
-        return Resolver1900.ANSWER_RANGE
+        return Resolver1924.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()
@@ -41,3 +41,10 @@ class Resolver1900(ResolverBase):
             RuleItemMutex(self.question_data, '3,6;3,7;3,8;4,6;4,7;4,8;5,6;5,7;5,8'),
             RuleItemMutex(self.question_data, '6,6;6,7;6,8;7,6;7,7;7,8;8,6;8,7;8,8'),
         ]
+
+        for y in range(self.question_data.dimensionY - 1):
+            for x in range(self.question_data.dimensionX - 1):
+                rule_str = str(x) + ',' + str(y) + ';' + str(x + 1) + ',' + str(y + 1)
+                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+                rule_str = str(x) + ',' + str(y + 1) + ';' + str(x + 1) + ',' + str(y)
+                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))

@@ -1,3 +1,4 @@
+import copy
 import time
 
 from model.question_data import QuestionData
@@ -5,6 +6,10 @@ from model.question_data import QuestionData
 
 class ResolverBase:
     question_data = QuestionData()
+
+    def get_answer_range(self) -> []:
+        return []
+        pass
 
     def __init__(self, question_data: QuestionData) -> None:
         super().__init__()
@@ -28,10 +33,23 @@ class ResolverBase:
                             self.question_data.original_data[y].append('' if item_value == '0' else item_value)
                         else:
                             self.question_data.original_data[y].append('')
+        self.question_data.filtered_original_data = copy.deepcopy(self.question_data.original_data)
         pass
 
     def improve_data(self):
         print('开始完善题目的基础数据：' + self.question_data.question_key)
+        self.question_data.answer_range = self.get_answer_range()
+        self.question_data.candidate_data = []
+        # 重新初始化计算待选数据
+        for y in range(self.question_data.dimensionY):
+            for x in range(self.question_data.dimensionX):
+                if len(self.question_data.candidate_data) == y:
+                    self.question_data.candidate_data.append([])
+                if self.question_data.original_data[y][x] != '':
+                    self.question_data.candidate_data[y].append([self.question_data.original_data[y][x]])
+                else:
+                    self.question_data.candidate_data[y].append(copy.deepcopy(self.question_data.answer_range))
+
         pass
 
     def calculate_rules(self):
@@ -45,12 +63,6 @@ class ResolverBase:
             filtered_count = filtered_count + rule.filter_candidate_data()
         return filtered_count
 
-    # def calculate_check_current(self) -> bool:
-    #     print("开始检查当前生成的答案是否正确：" + self.question_data.question_key)
-    #     for rule in self.question_data.rules_list:
-    #         if not rule.check():
-    #             return False
-
     def calculate_answer(self):
         print("开始求解题目答案：" + self.question_data.question_key)
         start_time = int(round(time.time() * 1000))
@@ -62,6 +74,7 @@ class ResolverBase:
             this_time_filter_count = self.filter_all_rules_candidate_data()
         self.question_data.calculate_answer = []
         self.question_data.need_calculate_location_list = []
+        # 计算经过过滤后，还有哪些单元格需要计算，加入到待计算列表中
         for y in range(self.question_data.dimensionY):
             if len(self.question_data.calculate_data) == y:
                 self.question_data.calculate_data.append([])
@@ -87,6 +100,7 @@ class ResolverBase:
             return True
         this_location = self.question_data.need_calculate_location_list[calculate_index]
         for this_item in self.question_data.candidate_data[this_location[1]][this_location[0]]:
+            print('单元格【' + str(this_location[0]) + ',' + str(this_location[1]) + '】填数：' + this_item)
             self.question_data.calculate_data[this_location[1]][this_location[0]] = this_item
             if self.check_frame(calculate_index):
                 # 当前帧计算通过

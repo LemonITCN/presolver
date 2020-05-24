@@ -9,6 +9,8 @@ class QuestionData:
     dimensionY = 0
     draw_function_list = []
     original_data = []
+    # 过滤后的原始数据，经过rules层层过滤后的数据
+    filtered_original_data = []
     # 候选数字，三维数组
     candidate_data = []
     # 引擎不断填入尝试各种数字后产生的数据

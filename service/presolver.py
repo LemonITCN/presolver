@@ -5,9 +5,23 @@ import openpyxl
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
 from service.resolver_1900 import Resolver1900
+from service.resolver_1924 import Resolver1924
+from service.resolver_1925 import Resolver1925
+from service.resolver_1931 import Resolver1931
+from service.resolver_1954 import Resolver1954
+from service.resolver_1955 import Resolver1955
 
 
 class PResolver:
+    RESOLVER_POOL = {
+        'x1900': Resolver1900,
+        'x1924': Resolver1924,
+        '1925': Resolver1925,
+        'x1931': Resolver1931,
+        'x1954': Resolver1954,
+        'x1955': Resolver1955,
+    }
+
     @staticmethod
     def read_excel(excel_file_path: str) -> []:
         print('开始读取Excel中的题目数据...')
@@ -26,7 +40,7 @@ class PResolver:
                         temp_question_data.question_type_name = row[1].value
                         temp_question_data.question_level = row[2].value
                         temp_question_data.question_key = row[3].value
-                        temp_question_data.question_type_key = row[4].value
+                        temp_question_data.question_type_key = str(row[4].value)
                         temp_question_data.dimensionX = int(row[8].value.split(',')[0])
                         temp_question_data.dimensionY = int(row[8].value.split(',')[1])
                         question_pool[question_key] = temp_question_data
@@ -44,11 +58,11 @@ class PResolver:
     @staticmethod
     def calculate_answer(question_data: QuestionData):
         logging.info('【静态调用】开始计算题目答案：' + question_data.question_key)
-        if question_data.question_key.startswith('1900'):
-            resolver = Resolver1900(question_data)
+        if question_data.question_type_key in PResolver.RESOLVER_POOL:
+            resolver = PResolver.RESOLVER_POOL[question_data.question_type_key](question_data)
             resolver.calculate_answer()
         else:
-            print('暂不支持次此题型')
+            print('暂不支持本题目【' + question_data.question_key + '】的题型: ' + question_data.question_type_key)
 
     @staticmethod
     def calculate_answer_list(question_data_list: []):

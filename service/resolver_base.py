@@ -100,7 +100,7 @@ class ResolverBase:
             return True
         this_location = self.question_data.need_calculate_location_list[calculate_index]
         for this_item in self.question_data.candidate_data[this_location[1]][this_location[0]]:
-            print('单元格【' + str(this_location[0]) + ',' + str(this_location[1]) + '】填数：' + this_item)
+            # print('单元格【' + str(this_location[0]) + ',' + str(this_location[1]) + '】填数：' + this_item)
             self.question_data.calculate_data[this_location[1]][this_location[0]] = this_item
             if self.check_frame(calculate_index):
                 # 当前帧计算通过

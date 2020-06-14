@@ -3,6 +3,7 @@ from service.rule_item_mutex import RuleItemMutex
 from service.rule_sum_check import RuleSumCheck
 
 
+# 九宫VX数独
 class Resolver1925(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 

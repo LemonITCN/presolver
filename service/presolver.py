@@ -8,18 +8,20 @@ from service.resolver_1900 import Resolver1900
 from service.resolver_1924 import Resolver1924
 from service.resolver_1925 import Resolver1925
 from service.resolver_1931 import Resolver1931
+from service.resolver_1933 import Resolver1933
 from service.resolver_1954 import Resolver1954
 from service.resolver_1955 import Resolver1955
 
 
 class PResolver:
     RESOLVER_POOL = {
-        'x1900': Resolver1900,
-        'x1924': Resolver1924,
+        '1900': Resolver1900,
+        '1924': Resolver1924,
         '1925': Resolver1925,
-        'x1931': Resolver1931,
-        'x1954': Resolver1954,
-        'x1955': Resolver1955,
+        '1931': Resolver1931,
+        '1933': Resolver1933,
+        '1954': Resolver1954,
+        '1955': Resolver1955,
     }
 
     @staticmethod
@@ -69,3 +71,28 @@ class PResolver:
         logging.info('start calculate answer list')
         for question in question_data_list:
             PResolver.calculate_answer(question)
+
+    @staticmethod
+    def write_calculate_result_data_to_excel(excel_file_path: str, question_data_list: []):
+        print('开始将计算结果数据写入excel')
+        workbook = openpyxl.load_workbook(excel_file_path)
+        row_index = 0
+        question_mapping = {}
+        for question in question_data_list:
+            question_mapping[question.question_key] = question
+        for row in workbook.worksheets[0].rows:
+            if row[0].value is not None and row_index > 0:
+                if row[0].value.strip() != '':
+                    question_key = row[3].value
+                    if question_key in question_mapping:
+                        workbook.worksheets[0].cell(row_index + 1, 10, PResolver.process_question_answer_result_string(
+                            question_mapping[question_key].answer_data))
+            row_index = row_index + 1
+        workbook.save(excel_file_path)
+        print('计算结果Excel写出完毕')
+
+    @staticmethod
+    def process_question_answer_result_string(answer_data: []) -> str:
+        result = str(answer_data)
+        result = result.replace(' ', '').replace(',', '').replace('[', '').replace(']', '').replace('\'', '')
+        return result

@@ -4,6 +4,7 @@ import openpyxl
 
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
+from utils.data_utils import DataUtils
 from service.resolver_1900 import Resolver1900
 from service.resolver_1924 import Resolver1924
 from service.resolver_1925 import Resolver1925
@@ -85,7 +86,7 @@ class PResolver:
                 if row[0].value.strip() != '':
                     question_key = row[3].value
                     if question_key in question_mapping:
-                        workbook.worksheets[0].cell(row_index + 1, 10, PResolver.process_question_answer_result_string(
+                        workbook.worksheets[0].cell(row_index + 1, 10, DataUtils.parse_arr_data_to_clear_str_data(
                             question_mapping[question_key].answer_data))
             row_index = row_index + 1
         workbook.save(excel_file_path)

@@ -1,7 +1,5 @@
 import copy
 
-from memory_profiler import profile
-
 from model.question_data import QuestionData
 from service.presolver import PResolver
 

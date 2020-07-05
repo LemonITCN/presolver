@@ -6,6 +6,7 @@ from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
 from utils.data_utils import DataUtils
 from service.resolver_1900 import Resolver1900
+from service.resolver_1923 import Resolver1923
 from service.resolver_1924 import Resolver1924
 from service.resolver_1925 import Resolver1925
 from service.resolver_1931 import Resolver1931
@@ -17,6 +18,7 @@ from service.resolver_1955 import Resolver1955
 class PResolver:
     RESOLVER_POOL = {
         '1900': Resolver1900,
+        '1923': Resolver1923,
         '1924': Resolver1924,
         '1925': Resolver1925,
         '1931': Resolver1931,

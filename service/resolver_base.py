@@ -34,6 +34,11 @@ class ResolverBase:
                         else:
                             self.question_data.original_data[y].append('')
         self.question_data.filtered_original_data = copy.deepcopy(self.question_data.original_data)
+        self.calculate_editable_original_data()
+        pass
+
+    def calculate_editable_original_data(self):
+        self.question_data.editable_original_data = copy.deepcopy(self.question_data.original_data)
         pass
 
     def improve_data(self):

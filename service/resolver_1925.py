@@ -83,3 +83,10 @@ class Resolver1925(ResolverBase):
         for relation_str in all_relations:
             self.question_data.rules_list.append(RuleSumCheck(self.question_data, relation_str + ':not_equal:5'))
             self.question_data.rules_list.append(RuleSumCheck(self.question_data, relation_str + ':not_equal:10'))
+
+    def calculate_editable_original_data(self):
+        super().calculate_editable_original_data()
+        for y_index in range(len(self.question_data.editable_original_data)):
+            for x_index in range(len(self.question_data.editable_original_data[y_index])):
+                if self.question_data.editable_original_data[y_index][x_index] == '':
+                    self.question_data.editable_original_data[y_index][x_index] = '#'

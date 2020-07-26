@@ -48,3 +48,10 @@ class Resolver1954(ResolverBase):
             RuleItemMutex(self.question_data, '5,5;6,5;7,5;5,6;6,6;7,6;5,7;6,7;7,7'),
 
         ]
+
+    def calculate_editable_original_data(self):
+        super().calculate_editable_original_data()
+        for y_index in range(len(self.question_data.editable_original_data)):
+            for x_index in range(len(self.question_data.editable_original_data[y_index])):
+                if self.question_data.editable_original_data[y_index][x_index] == '':
+                    self.question_data.editable_original_data[y_index][x_index] = '#'

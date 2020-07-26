@@ -49,3 +49,10 @@ class Resolver1955(ResolverBase):
                     for xs in [0, 3, 6]:
                         rule_str = rule_str + str(x + xs) + ',' + str(y + ys) + ';'
                 self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+
+    def calculate_editable_original_data(self):
+        super().calculate_editable_original_data()
+        for y_index in range(len(self.question_data.editable_original_data)):
+            for x_index in range(len(self.question_data.editable_original_data[y_index])):
+                if self.question_data.editable_original_data[y_index][x_index] == '':
+                    self.question_data.editable_original_data[y_index][x_index] = '#'

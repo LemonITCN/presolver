@@ -4,6 +4,11 @@ import openpyxl
 
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
+from service.resolver_1600 import Resolver1600
+from service.resolver_1623 import Resolver1623
+from service.resolver_1624 import Resolver1624
+from service.resolver_1631 import Resolver1631
+from service.resolver_1655 import Resolver1655
 from service.resolver_1900 import Resolver1900
 from service.resolver_1910 import Resolver1910
 from service.resolver_1923 import Resolver1923
@@ -18,6 +23,12 @@ from utils.data_utils import DataUtils
 
 class PResolver:
     RESOLVER_POOL = {
+        '1600': Resolver1600,
+        '1623': Resolver1623,
+        '1624': Resolver1624,
+        '1631': Resolver1631,
+        '1655': Resolver1655,
+
         '1900': Resolver1900,
         '1910': Resolver1910,
         '1923': Resolver1923,

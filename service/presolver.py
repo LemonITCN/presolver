@@ -11,9 +11,11 @@ from service.resolver_1631 import Resolver1631
 from service.resolver_1655 import Resolver1655
 from service.resolver_1900 import Resolver1900
 from service.resolver_1910 import Resolver1910
+from service.resolver_1916 import Resolver1916
 from service.resolver_1923 import Resolver1923
 from service.resolver_1924 import Resolver1924
 from service.resolver_1925 import Resolver1925
+from service.resolver_1926 import Resolver1926
 from service.resolver_1931 import Resolver1931
 from service.resolver_1933 import Resolver1933
 from service.resolver_1954 import Resolver1954
@@ -31,9 +33,11 @@ class PResolver:
 
         '1900': Resolver1900,
         '1910': Resolver1910,
+        '1916': Resolver1916,
         '1923': Resolver1923,
         '1924': Resolver1924,
         '1925': Resolver1925,
+        '1926': Resolver1926,
         '1931': Resolver1931,
         '1933': Resolver1933,
         '1954': Resolver1954,

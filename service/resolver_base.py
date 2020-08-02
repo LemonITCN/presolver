@@ -18,21 +18,22 @@ class ResolverBase:
     def calculate_original_data(self):
         print('开始计算题目的原始数据：' + self.question_data.question_key)
         self.question_data.original_data = []
+        for y in range(self.question_data.dimensionY):
+            if len(self.question_data.original_data) == y:
+                self.question_data.original_data.append([])
+            else:
+                self.question_data.original_data[y] = []
+            for x in range(self.question_data.dimensionX):
+                self.question_data.original_data[y].append('')
         for draw_function in self.question_data.draw_function_list:
             # 发现是DBN函数，开始读取题目原始数据
             if draw_function.function_name == 'DBN':
                 for y in range(self.question_data.dimensionY):
-                    if len(self.question_data.original_data) == y:
-                        self.question_data.original_data.append([])
-                    else:
-                        self.question_data.original_data[y] = []
                     for x in range(self.question_data.dimensionX):
                         num_index = y * self.question_data.dimensionX + x
                         if num_index < len(draw_function.data):
                             item_value = draw_function.data[num_index]
-                            self.question_data.original_data[y].append('' if item_value == '0' else item_value)
-                        else:
-                            self.question_data.original_data[y].append('')
+                            self.question_data.original_data[y][x] = ('' if item_value == '0' else item_value)
         self.question_data.filtered_original_data = copy.deepcopy(self.question_data.original_data)
         self.calculate_editable_original_data()
         pass

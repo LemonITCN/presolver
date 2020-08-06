@@ -1,9 +1,7 @@
 import sys
 
-from service.presolver import PResolver
-from service.pgenerator import PGenerator
 from model.question_data import QuestionData
-from model.draw_function_data import DrawFunctionData
+from service.presolver import PResolver
 
 # question_list = PResolver.read_excel('/Users/liuri/Documents/code/lemonit-workdata/易学而乐/2020年3月开始e学数独第一期资料/九宫题目模板.xlsx')
 # excel_path = '/Users/liuri/Desktop/易学数独算法/窗口数独20200613.xlsx'
@@ -16,9 +14,17 @@ if len(sys.argv) < 2:
     sys.exit(1)
 excel_path = sys.argv[1]
 question_list = PResolver.read_excel(excel_path)
-PResolver.calculate_answer_list(question_list)
-PResolver.write_calculate_result_data_to_excel(excel_path, question_list)
 
+
+def calculate_success_callback(question: QuestionData):
+    PResolver.write_calculate_result_data_to_excel(excel_path, [question])
+    rule_excel_path_split = excel_path.split('/')
+    rule_excel_path_split.pop(len(rule_excel_path_split) - 1)
+    PResolver.write_check_rule_data_to_excel(
+        '/'.join(rule_excel_path_split) + '/check-rule-' + question.question_key + '.xlsx', [question])
+
+
+PResolver.calculate_answer_list(question_list, calculate_success_callback)
 
 # 生成数感练习题目时使用
 # question_seed = QuestionData()

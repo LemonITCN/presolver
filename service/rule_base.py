@@ -15,3 +15,11 @@ class RuleBase:
     def filter_candidate_data(self) -> int:
         return 0
         pass
+
+    def get_rule_str(self) -> str:
+        return ''
+        pass
+
+    def get_rule_name_str(self) -> str:
+        return ''
+        pass

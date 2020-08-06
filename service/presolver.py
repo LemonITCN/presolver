@@ -11,6 +11,8 @@ from service.resolver_1631 import Resolver1631
 from service.resolver_1655 import Resolver1655
 from service.resolver_1900 import Resolver1900
 from service.resolver_1910 import Resolver1910
+from service.resolver_1914 import Resolver1914
+from service.resolver_1915 import Resolver1915
 from service.resolver_1916 import Resolver1916
 from service.resolver_1923 import Resolver1923
 from service.resolver_1924 import Resolver1924
@@ -33,6 +35,8 @@ class PResolver:
 
         '1900': Resolver1900,
         '1910': Resolver1910,
+        '1914': Resolver1914,
+        '1915': Resolver1915,
         '1916': Resolver1916,
         '1923': Resolver1923,
         '1924': Resolver1924,
@@ -80,23 +84,23 @@ class PResolver:
         return question_pool.values()
 
     @staticmethod
-    def calculate_answer(question_data: QuestionData):
+    def calculate_answer(question_data: QuestionData, success_callback):
         logging.info('【静态调用】开始计算题目答案：' + question_data.question_key)
         if question_data.question_type_key in PResolver.RESOLVER_POOL:
             resolver = PResolver.RESOLVER_POOL[question_data.question_type_key](question_data)
             resolver.calculate_original_data()
             if question_data.answer_data is None or question_data.answer_data == '':
-                resolver.calculate_answer()
+                resolver.calculate_answer(success_callback)
             else:
                 print('题目excel中答案不为空，本题【' + question_data.question_key + '】跳过...')
         else:
             print('暂不支持本题目【' + question_data.question_key + '】的题型: ' + question_data.question_type_key)
 
     @staticmethod
-    def calculate_answer_list(question_data_list: []):
+    def calculate_answer_list(question_data_list: [], success_callback):
         logging.info('start calculate answer list')
         for question in question_data_list:
-            PResolver.calculate_answer(question)
+            PResolver.calculate_answer(question, success_callback)
 
     @staticmethod
     def write_calculate_result_data_to_excel(excel_file_path: str, question_data_list: []):
@@ -126,6 +130,25 @@ class PResolver:
             row_index = row_index + 1
         workbook.save(excel_file_path)
         print('计算结果Excel写出完毕')
+
+    @staticmethod
+    def write_check_rule_data_to_excel(excel_file_path: str, question_data_list: []):
+        print('开始将题目校验规则写入excel')
+        rule_excel = openpyxl.Workbook()
+        for question in question_data_list:
+            sheet = rule_excel.create_sheet(question.question_key)
+            sheet.column_dimensions['A'].width = 40.0
+            sheet.column_dimensions['B'].width = 30.0
+            sheet.column_dimensions['C'].width = 120.0
+            row_index = 1
+            for check_rule in question.rules_list:
+                sheet.cell(row_index, 1, question.question_key)
+                sheet.cell(row_index, 2, check_rule.get_rule_name_str())
+                sheet.cell(row_index, 3, check_rule.get_rule_str())
+                row_index = row_index + 1
+        rule_excel.remove(rule_excel.worksheets[0])
+        rule_excel.save(excel_file_path)
+        print('题目校验规则excel写出完毕')
 
     @staticmethod
     def process_question_answer_result_string(answer_data: []) -> str:

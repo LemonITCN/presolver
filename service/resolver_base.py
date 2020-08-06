@@ -69,7 +69,7 @@ class ResolverBase:
             filtered_count = filtered_count + rule.filter_candidate_data()
         return filtered_count
 
-    def calculate_answer(self):
+    def calculate_answer(self, success_callback):
         print("开始求解题目答案：" + self.question_data.question_key)
         start_time = int(round(time.time() * 1000))
         self.calculate_original_data()
@@ -96,6 +96,7 @@ class ResolverBase:
         if self.calculate_answer_frame(0):
             print('题目成功计算出答案：' + self.question_data.question_key + ', 耗时：' + str(
                 int(round(time.time() * 1000)) - start_time) + 'ms')
+            success_callback(self.question_data)
         else:
             print('题目计算答案失败，无解：' + self.question_data.question_key)
         pass

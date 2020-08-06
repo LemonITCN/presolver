@@ -4,11 +4,11 @@ from service.rule_item_mutex import RuleItemMutex
 
 
 # 九宫黑白点数独
-class Resolver1926(ResolverBase):
+class Resolver1915(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     def get_answer_range(self) -> []:
-        return Resolver1926.ANSWER_RANGE
+        return Resolver1915.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()
@@ -43,14 +43,6 @@ class Resolver1926(ResolverBase):
             RuleItemMutex(self.question_data, '3,6;3,7;3,8;4,6;4,7;4,8;5,6;5,7;5,8'),
             RuleItemMutex(self.question_data, '6,6;6,7;6,8;7,6;7,7;7,8;8,6;8,7;8,8'),
         ]
-        all_relations = []
-        # 先计算出所有相邻单元格关系，然后稍后再下方进行关系筛选，其余的最后做不等关系规则
-        for y in range(self.question_data.dimensionY):
-            for x in range(self.question_data.dimensionX):
-                if x < self.question_data.dimensionX - 1:
-                    all_relations.append(str(x) + ',' + str(y) + ';' + str(x + 1) + ',' + str(y))
-                if y < self.question_data.dimensionY - 1:
-                    all_relations.append(str(x) + ',' + str(y) + ';' + str(x) + ',' + str(y + 1))
         for draw_function_data in self.question_data.draw_function_list:
             if draw_function_data.function_name == 'DLE':
                 relation_direction = draw_function_data.parameters[0]
@@ -68,22 +60,9 @@ class Resolver1926(ResolverBase):
                             elif relation_direction == 'B':
                                 cell1 = str(location[0]) + ',' + str(location[1])
                                 cell2 = str(location[0]) + ',' + str(location[1] + 1)
-                            rule_str = ''
-                            if param_group_split[1] == 'kongxinyuan':
-                                rule_str = 'abs(cell_value(' + cell1 + ') - cell_value(' + cell2 + ')) == 1'
-                            elif param_group_split[1] == 'shixinyuan':
-                                rule_str = 'max(cell_value(' + cell1 + '), cell_value(' + cell2 + ')) / ' + \
-                                           'min(cell_value(' + cell1 + '), cell_value(' + cell2 + ')) == 2'
-                            if (cell1 + ';' + cell2) in all_relations:
-                                all_relations.remove(cell1 + ';' + cell2)
+                            rule_str = '(cell_value(' + cell1 + ') / cell_value(' + cell2 + ') == ' + param_group_split[1] + ') | '+ \
+                                       '(cell_value(' + cell2 + ') / cell_value(' + cell1 + ') == ' + param_group_split[1] + ')'
                             self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
-        for relation_str in all_relations:
-            cell_items = relation_str.split(';')
-            rule_str = '(abs(cell_value(' + cell_items[0] + ') - cell_value(' + cell_items[1] + ')) != 1)' + ' & ' + \
-                       '(max(cell_value(' + cell_items[0] + '), cell_value(' + cell_items[1] + ')) / ' + \
-                       'min(cell_value(' + cell_items[0] + '), cell_value(' + cell_items[1] + ')) != 2)'
-            self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
-            self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
 
     def calculate_editable_original_data(self):
         super().calculate_editable_original_data()

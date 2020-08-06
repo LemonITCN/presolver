@@ -54,3 +54,13 @@ class RuleItemMutex(RuleBase):
                                 self.question_data.candidate_data[location[1]][location[0]][0]
                         filtered_count = filtered_count + 1
         return filtered_count
+
+    def get_rule_str(self) -> str:
+        result_str = '["'
+        for location in self.location_list:
+            result_str = result_str + str(location[0]) + ',' + str(location[1]) + ';'
+        result_str = result_str + '"]'
+        return result_str
+
+    def get_rule_name_str(self) -> str:
+        return 'ITEM_MUTEX'

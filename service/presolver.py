@@ -1,6 +1,7 @@
 import logging
 
 import openpyxl
+from openpyxl.styles import PatternFill, colors
 
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
@@ -135,16 +136,30 @@ class PResolver:
     def write_check_rule_data_to_excel(excel_file_path: str, question_data_list: []):
         print('开始将题目校验规则写入excel')
         rule_excel = openpyxl.Workbook()
+        style_1 = PatternFill("solid", fgColor=colors.YELLOW)
+        style_2 = PatternFill("solid", fgColor=colors.GREEN)
+        question_index = 0
         for question in question_data_list:
             sheet = rule_excel.create_sheet(question.question_key)
             sheet.column_dimensions['A'].width = 40.0
             sheet.column_dimensions['B'].width = 30.0
-            sheet.column_dimensions['C'].width = 120.0
-            row_index = 1
+            sheet.column_dimensions['C'].width = 60.0
+            sheet.column_dimensions['D'].width = 120.0
+            sheet.column_dimensions['E'].width = 30.0
+            sheet.cell(1, 1, '题目编号')
+            sheet.cell(1, 2, '规则函数名称')
+            sheet.cell(1, 3, '规则函数参数')
+            sheet.cell(1, 4, '规则函数数据')
+            sheet.cell(1, 5, '规则函数排序')
+            question_index = question_index + 1
+            question_style = style_1 if question_index / 2 == 0 else style_2
+            row_index = 2
             for check_rule in question.rules_list:
-                sheet.cell(row_index, 1, question.question_key)
-                sheet.cell(row_index, 2, check_rule.get_rule_name_str())
-                sheet.cell(row_index, 3, check_rule.get_rule_str())
+                sheet.cell(row_index, 1, question.question_key).fill = question_style
+                sheet.cell(row_index, 2, check_rule.get_rule_name_str()).fill = question_style
+                sheet.cell(row_index, 3, check_rule.get_rule_parameters_str()).fill = question_style
+                sheet.cell(row_index, 4, check_rule.get_rule_data_str()).fill = question_style
+                sheet.cell(row_index, 5, str(row_index - 2)).fill = question_style
                 row_index = row_index + 1
         rule_excel.remove(rule_excel.worksheets[0])
         rule_excel.save(excel_file_path)

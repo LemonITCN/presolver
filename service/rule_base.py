@@ -16,7 +16,11 @@ class RuleBase:
         return 0
         pass
 
-    def get_rule_str(self) -> str:
+    def get_rule_data_str(self) -> str:
+        return ''
+        pass
+
+    def get_rule_parameters_str(self) -> str:
         return ''
         pass
 

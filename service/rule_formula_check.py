@@ -41,8 +41,11 @@ class RuleFormulaCheck(RuleBase):
         super().filter_candidate_data()
         return 0
 
-    def get_rule_str(self) -> str:
+    def get_rule_data_str(self) -> str:
         return self.formula_str
+
+    def get_rule_parameters_str(self) -> str:
+        return ''
 
     def get_rule_name_str(self) -> str:
         return 'FORMULA_CHECK'

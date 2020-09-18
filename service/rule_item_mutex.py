@@ -55,12 +55,15 @@ class RuleItemMutex(RuleBase):
                         filtered_count = filtered_count + 1
         return filtered_count
 
-    def get_rule_str(self) -> str:
+    def get_rule_data_str(self) -> str:
         result_str = '["'
         for location in self.location_list:
             result_str = result_str + str(location[0]) + ',' + str(location[1]) + ';'
         result_str = result_str + '"]'
         return result_str
+
+    def get_rule_parameters_str(self) -> str:
+        return ''
 
     def get_rule_name_str(self) -> str:
         return 'ITEM_MUTEX'

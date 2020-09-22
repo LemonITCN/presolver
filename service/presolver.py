@@ -15,14 +15,19 @@ from service.resolver_1910 import Resolver1910
 from service.resolver_1914 import Resolver1914
 from service.resolver_1915 import Resolver1915
 from service.resolver_1916 import Resolver1916
+from service.resolver_1921 import Resolver1921
 from service.resolver_1923 import Resolver1923
 from service.resolver_1924 import Resolver1924
 from service.resolver_1925 import Resolver1925
 from service.resolver_1926 import Resolver1926
 from service.resolver_1931 import Resolver1931
 from service.resolver_1933 import Resolver1933
+from service.resolver_1942 import Resolver1942
+from service.resolver_1951 import Resolver1951
 from service.resolver_1954 import Resolver1954
 from service.resolver_1955 import Resolver1955
+from service.resolver_1957 import Resolver1957
+from service.resolver_1964 import Resolver1964
 from utils.data_utils import DataUtils
 
 
@@ -39,14 +44,19 @@ class PResolver:
         '1914': Resolver1914,
         '1915': Resolver1915,
         '1916': Resolver1916,
+        '1921': Resolver1921,
         '1923': Resolver1923,
         '1924': Resolver1924,
         '1925': Resolver1925,
         '1926': Resolver1926,
         '1931': Resolver1931,
         '1933': Resolver1933,
+        '1942': Resolver1942,
+        '1951': Resolver1951,
         '1954': Resolver1954,
         '1955': Resolver1955,
+        '1957': Resolver1957,
+        '1964': Resolver1964,
     }
 
     @staticmethod

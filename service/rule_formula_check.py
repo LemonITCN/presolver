@@ -33,8 +33,7 @@ class RuleFormulaCheck(RuleBase):
                 return True
         try:
             result = eval(self.formula_str, {'cell_value': self.cell_value})
-            return result
-        except ZeroDivisionError:
+        except :
             return False
 
     def filter_candidate_data(self) -> int:

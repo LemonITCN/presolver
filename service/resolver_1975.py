@@ -1,14 +1,14 @@
 from service.resolver_base import ResolverBase
+from service.rule_formula_check import RuleFormulaCheck
 from service.rule_item_mutex import RuleItemMutex
 
 
-# 9宫无缘数独
-# DB 互斥规则已写入
-class Resolver1924(ResolverBase):
+# 九宫奇数数独
+class Resolver1942(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     def get_answer_range(self) -> []:
-        return Resolver1924.ANSWER_RANGE
+        return Resolver1942.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()
@@ -43,13 +43,25 @@ class Resolver1924(ResolverBase):
             RuleItemMutex(self.question_data, '3,6;3,7;3,8;4,6;4,7;4,8;5,6;5,7;5,8'),
             RuleItemMutex(self.question_data, '6,6;6,7;6,8;7,6;7,7;7,8;8,6;8,7;8,8'),
         ]
-
-        for y in range(self.question_data.dimensionY - 1):
-            for x in range(self.question_data.dimensionX - 1):
-                rule_str = str(x) + ',' + str(y) + ';' + str(x + 1) + ',' + str(y + 1)
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
-                rule_str = str(x) + ',' + str(y + 1) + ';' + str(x + 1) + ',' + str(y)
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+        # 读取Excel中所有DBG函数，根据箭头方向生成寻9规则公式
+        for draw_function_data in self.question_data.draw_function_list:
+            if draw_function_data.function_name == 'DBG':
+                for location_tag in draw_function_data.data.split(','):
+                    # 将单元格tag转换成坐标，如A3 -> 2,0
+                    location = [int(location_tag[1]) - 1, ord(location_tag[0]) - 65]
+                    cell1 = str(location[0]) + ',' + str(location[1])
+                    if draw_function_data.parameters[0] == '69up':
+                        rule_str = 'cell_value(' + str(location[0]) + ',(' + str(location[1]) + '- cell_value(' + cell1 + ')' + ')) == 9'
+                        self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
+                    elif draw_function_data.parameters[0] == '69down':
+                        rule_str = 'cell_value(' + str(location[0]) + ',(' + str(location[1]) + '+ cell_value(' + cell1 + ')' + ')) == 9'
+                        self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
+                    elif draw_function_data.parameters[0] == '69left':
+                        rule_str = 'cell_value(' + str('(' + str(location[0]) + '- cell_value(' + cell1 + ')' + '),' + str(location[1])) + ') == 9'
+                        self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
+                    elif draw_function_data.parameters[0] == '69right':
+                        rule_str = 'cell_value(' + str('(' + str(location[0]) + '+ cell_value(' + cell1 + ')' + '),' + str(location[1])) + ') == 9'
+                        self.question_data.rules_list.append(RuleFormulaCheck(self.question_data, rule_str))
 
     def calculate_editable_original_data(self):
         super().calculate_editable_original_data()

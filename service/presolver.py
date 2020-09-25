@@ -27,6 +27,7 @@ from service.resolver_1951 import Resolver1951
 from service.resolver_1954 import Resolver1954
 from service.resolver_1955 import Resolver1955
 from service.resolver_1957 import Resolver1957
+from service.resolver_1962 import Resolver1962
 from service.resolver_1964 import Resolver1964
 from utils.data_utils import DataUtils
 
@@ -56,6 +57,7 @@ class PResolver:
         '1954': Resolver1954,
         '1955': Resolver1955,
         '1957': Resolver1957,
+        '1962': Resolver1962,
         '1964': Resolver1964,
     }
 
@@ -101,7 +103,10 @@ class PResolver:
             resolver = PResolver.RESOLVER_POOL[question_data.question_type_key](question_data)
             resolver.calculate_original_data()
             if question_data.answer_data is None or question_data.answer_data == '':
-                resolver.calculate_answer(success_callback)
+                try:
+                    resolver.calculate_answer(success_callback)
+                except:
+                    print('解题过程中发生错误，可能是题目录入有误，本题【' + question_data.question_key + '】跳过...')
             else:
                 print('题目excel中答案不为空，本题【' + question_data.question_key + '】跳过...')
         else:

@@ -1,14 +1,14 @@
 from service.resolver_base import ResolverBase
+from service.rule_formula_check import RuleFormulaCheck
 from service.rule_item_mutex import RuleItemMutex
 
 
-# 9宫无缘数独
-# DB 互斥规则已写入
-class Resolver1924(ResolverBase):
+# 九宫X和数独
+class Resolver1964(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     def get_answer_range(self) -> []:
-        return Resolver1924.ANSWER_RANGE
+        return Resolver1964.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()
@@ -43,13 +43,19 @@ class Resolver1924(ResolverBase):
             RuleItemMutex(self.question_data, '3,6;3,7;3,8;4,6;4,7;4,8;5,6;5,7;5,8'),
             RuleItemMutex(self.question_data, '6,6;6,7;6,8;7,6;7,7;7,8;8,6;8,7;8,8'),
         ]
-
-        for y in range(self.question_data.dimensionY - 1):
-            for x in range(self.question_data.dimensionX - 1):
-                rule_str = str(x) + ',' + str(y) + ';' + str(x + 1) + ',' + str(y + 1)
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
-                rule_str = str(x) + ',' + str(y + 1) + ';' + str(x + 1) + ',' + str(y)
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+        # 读取Excel中所有DBG函数，生成奇数灰格子的互斥规则
+        for draw_function_data in self.question_data.draw_function_list:
+            if draw_function_data.function_name == 'DOE':
+                line_list = draw_function_data.data.split(';')
+                if len(line_list) == 2:
+                    if draw_function_data.parameters[0] is 'T':
+                        num_list = line_list[0].split(':')[0].split[',']
+                        arrow_list = line_list[1].split(':')[0].split[',']
+                        arrow_index = 0
+                        for arrow in arrow_list:
+                            if arrow is not '0':
+                                rule_str = ''
+                            arrow_index = arrow_index + 1
 
     def calculate_editable_original_data(self):
         super().calculate_editable_original_data()

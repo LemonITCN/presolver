@@ -2,6 +2,7 @@ from service.resolver_base import ResolverBase
 from service.rule_item_mutex import RuleItemMutex
 
 
+# 6宫无马数独
 # DB 互斥规则已写入
 class Resolver1623(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6']
@@ -12,6 +13,7 @@ class Resolver1623(ResolverBase):
     def calculate_rules(self):
         super().calculate_rules()
         self.question_data.rules_list = [
+            RuleItemMutex(self.question_data, '0,0;0,1;0,2;0,3;0,4;0,5'),
             RuleItemMutex(self.question_data, '0,0;0,1;0,2;0,3;0,4;0,5'),
             RuleItemMutex(self.question_data, '1,0;1,1;1,2;1,3;1,4;1,5'),
             RuleItemMutex(self.question_data, '2,0;2,1;2,2;2,3;2,4;2,5'),
@@ -59,13 +61,12 @@ class Resolver1623(ResolverBase):
             RuleItemMutex(self.question_data, '4,2;5,4'),
             RuleItemMutex(self.question_data, '4,3;5,5'),
 
-            # 2
-
             RuleItemMutex(self.question_data, '0,0;2,1'),
             RuleItemMutex(self.question_data, '1,0;3,1'),
             RuleItemMutex(self.question_data, '2,0;4,1'),
             RuleItemMutex(self.question_data, '3,0;5,1'),
 
+            # 2
             RuleItemMutex(self.question_data, '0,1;2,2'),
             RuleItemMutex(self.question_data, '1,1;3,2'),
             RuleItemMutex(self.question_data, '2,1;4,2'),
@@ -136,7 +137,6 @@ class Resolver1623(ResolverBase):
             RuleItemMutex(self.question_data, '2,5;3,3'),
             RuleItemMutex(self.question_data, '3,5;4,3'),
             RuleItemMutex(self.question_data, '4,5;5,3'),
-
         ]
 
     def calculate_editable_original_data(self):

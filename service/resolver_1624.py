@@ -1,6 +1,7 @@
 from service.resolver_base import ResolverBase
 from service.rule_item_mutex import RuleItemMutex
 
+# 6宫无缘数独
 # DB 互斥规则已写入
 class Resolver1624(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6']

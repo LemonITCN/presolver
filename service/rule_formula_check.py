@@ -46,6 +46,7 @@ class RuleFormulaCheck(RuleBase):
                 return True
         try:
             result = eval(self.formula_str, {'cell_value': self.cell_value, 'calculate_max_count': self.calculate_max_count})
+            return result
         except :
             return False
 

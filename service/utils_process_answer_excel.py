@@ -47,7 +47,8 @@ class UtilsProcessAnswerExcel:
             workbook.worksheets[0].cell(new_row_index, 4, workbook.worksheets[0].cell(new_row_index - 1, 4).value)
             workbook.worksheets[0].cell(new_row_index, 5, workbook.worksheets[0].cell(new_row_index - 1, 5).value)
             workbook.worksheets[0].cell(new_row_index, 6, 'DBN')
-            workbook.worksheets[0].cell(new_row_index, 7, workbook.worksheets[0].cell(new_row_index - 1, 10).value)
+            workbook.worksheets[0].cell(new_row_index, 7,
+                                        workbook.worksheets[0].cell(new_row_index - 1, 10).value.replace(',', ''))
             workbook.worksheets[0].cell(new_row_index, 8, answer_dbn_params)
             workbook.worksheets[0].cell(new_row_index, 9, workbook.worksheets[0].cell(new_row_index - 1, 9).value)
             print('完善数据：' + question_num)

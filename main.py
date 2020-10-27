@@ -11,7 +11,7 @@ from service.utils_process_answer_excel import UtilsProcessAnswerExcel
 # excel_path = '/Users/liuri/Desktop/易学数独算法/斜线数独20200613.xlsx'
 
 # 正常情况下，求解时使用
-def action_solve():
+def action_resolve():
     if len(sys.argv) < 3:
         print('请您传入要处理的Excel的路径')
         sys.exit(1)
@@ -42,8 +42,8 @@ def main():
         print('参数有误')
         sys.exit(1)
     action = sys.argv[1]
-    if action == 'solve':
-        action_solve()
+    if action == 'resolve':
+        action_resolve()
     elif action == 'process_answer_excel':
         action_process_answer_excel()
     else:

@@ -28,6 +28,7 @@ def action_solve():
     PResolver.calculate_answer_list(question_list, calculate_success_callback)
 
 
+# python3 main.py process_answer_excel ~/Downloads/190020201026.xlsx 0.06,#ff0000
 # 处理答案excel，将正常带有答案的excel转换为答案独自占用一行的格式，方便直接导入图片生成工具
 def action_process_answer_excel():
     if len(sys.argv) < 4:

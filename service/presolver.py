@@ -5,6 +5,7 @@ from openpyxl.styles import PatternFill, colors
 
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
+from service.resolver_1400 import Resolver1400
 from service.resolver_1600 import Resolver1600
 from service.resolver_1623 import Resolver1623
 from service.resolver_1624 import Resolver1624
@@ -34,6 +35,8 @@ from utils.data_utils import DataUtils
 
 class PResolver:
     RESOLVER_POOL = {
+        '1400': Resolver1400,
+
         '1600': Resolver1600,
         '1623': Resolver1623,
         '1624': Resolver1624,

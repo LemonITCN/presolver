@@ -10,7 +10,8 @@ from service.resolver_1600 import Resolver1600
 from service.resolver_1623 import Resolver1623
 from service.resolver_1624 import Resolver1624
 from service.resolver_1631 import Resolver1631
-from service.resolver_1655 import Resolver1655
+from service.resolver_1651 import Resolver1651
+from service.resolver_1656 import Resolver1656
 from service.resolver_1900 import Resolver1900
 from service.resolver_1910 import Resolver1910
 from service.resolver_1914 import Resolver1914
@@ -25,8 +26,8 @@ from service.resolver_1931 import Resolver1931
 from service.resolver_1933 import Resolver1933
 from service.resolver_1942 import Resolver1942
 from service.resolver_1951 import Resolver1951
-from service.resolver_1954 import Resolver1954
 from service.resolver_1955 import Resolver1955
+from service.resolver_1956 import Resolver1956
 from service.resolver_1957 import Resolver1957
 from service.resolver_1962 import Resolver1962
 from service.resolver_1964 import Resolver1964
@@ -34,6 +35,7 @@ from utils.data_utils import DataUtils
 
 
 class PResolver:
+
     RESOLVER_POOL = {
         '1400': Resolver1400,
 
@@ -41,7 +43,8 @@ class PResolver:
         '1623': Resolver1623,
         '1624': Resolver1624,
         '1631': Resolver1631,
-        '1655': Resolver1655,
+        '1651': Resolver1651,
+        '1656': Resolver1656,
 
         '1900': Resolver1900,
         '1910': Resolver1910,
@@ -57,13 +60,12 @@ class PResolver:
         '1933': Resolver1933,
         '1942': Resolver1942,
         '1951': Resolver1951,
-        '1954': Resolver1954,
+        '1956': Resolver1956,
         '1955': Resolver1955,
         '1957': Resolver1957,
         '1962': Resolver1962,
         '1964': Resolver1964,
     }
-
     @staticmethod
     def read_excel(excel_file_path: str) -> []:
         print('开始读取Excel中的题目数据...')

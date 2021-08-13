@@ -1,14 +1,14 @@
 from service.resolver_base import ResolverBase
+from service.rule_formula_check import RuleFormulaCheck
 from service.rule_item_mutex import RuleItemMutex
 
 
-# 6宫同位数独
-# DB 互斥规则已写入
-class Resolver1655(ResolverBase):
+# 九宫额外区域数独
+class Resolver1651(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6']
 
     def get_answer_range(self) -> []:
-        return Resolver1655.ANSWER_RANGE
+        return Resolver1651.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()
@@ -34,14 +34,16 @@ class Resolver1655(ResolverBase):
             RuleItemMutex(self.question_data, '0,4;1,4;2,4;0,5;1,5;2,5'),
             RuleItemMutex(self.question_data, '3,4;4,4;5,4;3,5;4,5;5,5'),
         ]
-
-        for y in range(2):
-            for x in range(3):
-                rule_str = ''
-                for ys in [0, 2, 4]:
-                    for xs in [0, 3]:
-                        rule_str = rule_str + str(x + xs) + ',' + str(y + ys) + ';'
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+        # 读取Excel中所有DBG函数，生成互斥规则
+        for draw_function_data in self.question_data.draw_function_list:
+            if draw_function_data.function_name == 'DBG':
+                cells_list = []
+                for location_tag in draw_function_data.data.split(','):
+                    # 将单元格tag转换成坐标，如A3 -> 2,0
+                    location = [int(location_tag[1]) - 1, ord(location_tag[0]) - 65]
+                    cell = str(location[0]) + ',' + str(location[1])
+                    cells_list.append(cell)
+                    self.question_data.rules_list.append(RuleItemMutex(self.question_data, ';'.join(cells_list)))
 
     def calculate_editable_original_data(self):
         super().calculate_editable_original_data()

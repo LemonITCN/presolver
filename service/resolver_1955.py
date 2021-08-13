@@ -2,8 +2,7 @@ from service.resolver_base import ResolverBase
 from service.rule_item_mutex import RuleItemMutex
 
 
-# 9宫同位数独
-# DB 互斥规则已写入
+# 九宫窗口数独
 class Resolver1955(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
@@ -42,15 +41,13 @@ class Resolver1955(ResolverBase):
             RuleItemMutex(self.question_data, '0,6;0,7;0,8;1,6;1,7;1,8;2,6;2,7;2,8'),
             RuleItemMutex(self.question_data, '3,6;3,7;3,8;4,6;4,7;4,8;5,6;5,7;5,8'),
             RuleItemMutex(self.question_data, '6,6;6,7;6,8;7,6;7,7;7,8;8,6;8,7;8,8'),
-        ]
 
-        for y in range(3):
-            for x in range(3):
-                rule_str = ''
-                for ys in [0, 3, 6]:
-                    for xs in [0, 3, 6]:
-                        rule_str = rule_str + str(x + xs) + ',' + str(y + ys) + ';'
-                self.question_data.rules_list.append(RuleItemMutex(self.question_data, rule_str))
+            RuleItemMutex(self.question_data, '1,1;2,1;3,1;1,2;2,2;3,2;1,3;2,3;3,3'),
+            RuleItemMutex(self.question_data, '5,1;6,1;7,1;5,2;6,2;7,2;5,3;6,3;7,3'),
+            RuleItemMutex(self.question_data, '1,5;2,5;3,5;1,6;2,6;3,6;1,7;2,7;3,7'),
+            RuleItemMutex(self.question_data, '5,5;6,5;7,5;5,6;6,6;7,6;5,7;6,7;7,7'),
+
+        ]
 
     def calculate_editable_original_data(self):
         super().calculate_editable_original_data()

@@ -47,6 +47,8 @@ class Resolver1611(ResolverBase):
                             location = [int(location_tag[1]) - 1, ord(location_tag[0]) - 65]
                             cell1 = ''
                             cell2 = ''
+                            cell3 = ''
+                            cell4 = ''
                             if relation_direction == 'R':
                                 cell1 = str(location[0]) + ',' + str(location[1])
                                 cell2 = str(location[0] + 1) + ',' + str(location[1])

@@ -36,10 +36,10 @@ class Resolver1957(ResolverBase):
         for draw_function_data in self.question_data.draw_function_list:
             if draw_function_data.function_name == 'DMD':
                 for location_group in draw_function_data.data.split(';'):
-                    if location_group is not '':
+                    if location_group != '':
                         cells_list = []
                         for location_tag in location_group.split(':'):
-                            if location_tag is not '':
+                            if location_tag != '':
                                 # 将单元格tag转换成坐标，如A3 -> 2,0
                                 location = [int(location_tag[1]) - 1, ord(location_tag[0]) - 65]
                                 cell = str(location[0]) + ',' + str(location[1])

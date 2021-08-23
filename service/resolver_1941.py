@@ -4,11 +4,11 @@ from service.rule_item_mutex import RuleItemMutex
 
 
 # 九宫奇数数独
-class Resolver1942(ResolverBase):
+class Resolver1941(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     def get_answer_range(self) -> []:
-        return Resolver1942.ANSWER_RANGE
+        return Resolver1941.ANSWER_RANGE
 
     def calculate_rules(self):
         super().calculate_rules()

@@ -6,12 +6,22 @@ from openpyxl.styles import PatternFill, colors
 from model.draw_function_data import DrawFunctionData
 from model.question_data import QuestionData
 from service.resolver_1400 import Resolver1400
+from service.resolver_1552 import Resolver1552
 from service.resolver_1600 import Resolver1600
+from service.resolver_1614 import Resolver1614
+from service.resolver_1615 import Resolver1615
+from service.resolver_1616 import Resolver1616
+from service.resolver_1621 import Resolver1621
 from service.resolver_1623 import Resolver1623
 from service.resolver_1624 import Resolver1624
+from service.resolver_1626 import Resolver1626
 from service.resolver_1631 import Resolver1631
+from service.resolver_1641 import Resolver1641
 from service.resolver_1651 import Resolver1651
+from service.resolver_1652 import Resolver1652
 from service.resolver_1656 import Resolver1656
+from service.resolver_1662 import Resolver1662
+from service.resolver_1752 import Resolver1752
 from service.resolver_1900 import Resolver1900
 from service.resolver_1910 import Resolver1910
 from service.resolver_1914 import Resolver1914
@@ -24,11 +34,11 @@ from service.resolver_1925 import Resolver1925
 from service.resolver_1926 import Resolver1926
 from service.resolver_1931 import Resolver1931
 from service.resolver_1933 import Resolver1933
-from service.resolver_1942 import Resolver1942
+from service.resolver_1941 import Resolver1941
 from service.resolver_1951 import Resolver1951
 from service.resolver_1955 import Resolver1955
 from service.resolver_1956 import Resolver1956
-from service.resolver_1957 import Resolver1957
+from service.resolver_1952 import Resolver1952
 from service.resolver_1962 import Resolver1962
 from service.resolver_1964 import Resolver1964
 from utils.data_utils import DataUtils
@@ -39,12 +49,24 @@ class PResolver:
     RESOLVER_POOL = {
         '1400': Resolver1400,
 
+        '1552': Resolver1552,
+
         '1600': Resolver1600,
+        '1614': Resolver1614,
+        '1615': Resolver1615,
+        '1616': Resolver1616,
+        '1621': Resolver1621,
         '1623': Resolver1623,
         '1624': Resolver1624,
+        '1626': Resolver1626,
         '1631': Resolver1631,
+        '1641': Resolver1641,
         '1651': Resolver1651,
+        '1652': Resolver1652,
         '1656': Resolver1656,
+        '1662': Resolver1662,
+
+        '1752': Resolver1752,
 
         '1900': Resolver1900,
         '1910': Resolver1910,
@@ -58,11 +80,11 @@ class PResolver:
         '1926': Resolver1926,
         '1931': Resolver1931,
         '1933': Resolver1933,
-        '1942': Resolver1942,
+        '1941': Resolver1941,
         '1951': Resolver1951,
+        '1952': Resolver1952,
         '1956': Resolver1956,
         '1955': Resolver1955,
-        '1957': Resolver1957,
         '1962': Resolver1962,
         '1964': Resolver1964,
     }

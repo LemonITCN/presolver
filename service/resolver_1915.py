@@ -3,7 +3,7 @@ from service.rule_formula_check import RuleFormulaCheck
 from service.rule_item_mutex import RuleItemMutex
 
 
-# 九宫黑白点数独
+# 九宫杀手数独
 class Resolver1915(ResolverBase):
     ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 

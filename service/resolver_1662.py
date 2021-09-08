@@ -39,7 +39,7 @@ class Resolver1662(ResolverBase):
             if draw_function_data.function_name == 'DOE':
                 index = 0
                 for location_tag in draw_function_data.data.split(','):
-                    if location_tag is not '0':
+                    if locoation_tag is not '0':
                         cell_list = []
                         if draw_function_data.parameters[0] is 'T':
                             for i in range(self.question_data.dimensionY):

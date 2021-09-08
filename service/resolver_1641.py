@@ -5,7 +5,7 @@ from service.rule_item_mutex import RuleItemMutex
 
 # 六宫奇数数独
 class Resolver1641(ResolverBase):
-    ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    ANSWER_RANGE = ['1', '2', '3', '4', '5', '6']
 
     def get_answer_range(self) -> []:
         return Resolver1641.ANSWER_RANGE

@@ -5,7 +5,7 @@ from service.rule_item_mutex import RuleItemMutex
 
 # 六宫摩天楼
 class Resolver1662(ResolverBase):
-    ANSWER_RANGE = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    ANSWER_RANGE = ['1', '2', '3', '4', '5', '6']
 
     def get_answer_range(self) -> []:
         return Resolver1662.ANSWER_RANGE
@@ -39,18 +39,18 @@ class Resolver1662(ResolverBase):
             if draw_function_data.function_name == 'DOE':
                 index = 0
                 for location_tag in draw_function_data.data.split(','):
-                    if locoation_tag is not '0':
+                    if locoation_tag != '0':
                         cell_list = []
-                        if draw_function_data.parameters[0] is 'T':
+                        if draw_function_data.parameters[0] == 'T':
                             for i in range(self.question_data.dimensionY):
                                 cell_list.append('cell_value(' + str(index) + ',' + str(i) + ')')
-                        if draw_function_data.parameters[0] is 'B':
+                        if draw_function_data.parameters[0] == 'B':
                             for i in range(self.question_data.dimensionY - 1, -1, -1):
                                 cell_list.append('cell_value(' + str(index) + ',' + str(i) + ')')
-                        if draw_function_data.parameters[0] is 'L':
+                        if draw_function_data.parameters[0] == 'L':
                             for i in range(self.question_data.dimensionX):
                                 cell_list.append('cell_value(' + str(i) + ',' + str(index) + ')')
-                        if draw_function_data.parameters[0] is 'R':
+                        if draw_function_data.parameters[0] == 'R':
                             for i in range(self.question_data.dimensionX - 1, -1, -1):
                                 cell_list.append('cell_value(' + str(i) + ',' + str(index) + ')')
                         rule_str = 'calculate_max_count([' + ','.join(cell_list) + ']) == ' + location_tag

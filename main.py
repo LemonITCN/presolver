@@ -11,6 +11,7 @@ from service.utils_process_answer_excel import UtilsProcessAnswerExcel
 # excel_path = '/Users/liuri/Desktop/易学数独算法/斜线数独20200613.xlsx'
 
 # 正常情况下，求解时使用
+# python .\main.py resolve C:\Users\LemonITCN\Desktop\龙门750.xlsx
 def action_resolve():
     if len(sys.argv) < 3:
         print('请您传入要处理的Excel的路径')

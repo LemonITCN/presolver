@@ -26,6 +26,14 @@ class Resolver1600(ResolverBase):
             RuleItemMutex(self.question_data, '0,4;1,4;2,4;3,4;4,4;5,4'),
             RuleItemMutex(self.question_data, '0,5;1,5;2,5;3,5;4,5;5,5'),
 
+            # 2022年12月31日对宫互斥规则有点懵，写完测试了一下， 如果后期发现有问题再试试这种方法，先注释
+            # RuleItemMutex(self.question_data, '0,0;0,1;0,2;1,0;1,1;1,2'),
+            # RuleItemMutex(self.question_data, '0,3;0,4;0,5;1,3;1,4;1,5'),
+            # RuleItemMutex(self.question_data, '2,0;2,1;2,2;3,0;3,1;3,2'),
+            # RuleItemMutex(self.question_data, '2,3;2,4;2,5;3,3;3,4;3,5'),
+            # RuleItemMutex(self.question_data, '4,0;4,1;4,2;5,0;5,1;5,2'),
+            # RuleItemMutex(self.question_data, '4,3;4,4;4,5;5,3;5,4;5,5'),
+
             RuleItemMutex(self.question_data, '0,0;1,0;2,0;0,1;1,1;2,1'),
             RuleItemMutex(self.question_data, '3,0;4,0;5,0;3,1;4,1;5,1'),
             RuleItemMutex(self.question_data, '0,2;1,2;2,2;0,3;1,3;2,3'),

@@ -21,10 +21,11 @@ def action_resolve():
 
     def calculate_success_callback(question: QuestionData):
         PResolver.write_calculate_result_data_to_excel(excel_path, [question])
-        rule_excel_path_split = excel_path.split('/')
-        rule_excel_path_split.pop(len(rule_excel_path_split) - 1)
-        PResolver.write_check_rule_data_to_excel(
-            '/'.join(rule_excel_path_split) + '/check-rule-' + question.question_key + '.xlsx', [question])
+        # 2025 年 9 月 29 日 觉得没必要写出 rule 文件了，先注释掉
+        # rule_excel_path_split = excel_path.split('/')
+        # rule_excel_path_split.pop(len(rule_excel_path_split) - 1)
+        # PResolver.write_check_rule_data_to_excel(
+        #     '/'.join(rule_excel_path_split) + '/check-rule-' + question.question_key + '.xlsx', [question])
 
     PResolver.calculate_answer_list(question_list, calculate_success_callback)
 

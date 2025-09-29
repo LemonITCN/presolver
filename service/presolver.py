@@ -132,7 +132,8 @@ class PResolver:
             if question_data.answer_data is None or question_data.answer_data == '':
                 try:
                     resolver.calculate_answer(success_callback)
-                except:
+                except Exception as e:
+                    print("发生错误:", e)
                     print('解题过程中发生错误，可能是题目录入有误，本题【' + question_data.question_key + '】跳过...')
             else:
                 print('题目excel中答案不为空，本题【' + question_data.question_key + '】跳过...')

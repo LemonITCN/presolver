@@ -43,6 +43,7 @@ from service.resolver_1962 import Resolver1962
 from service.resolver_1964 import Resolver1964
 from utils.data_utils import DataUtils
 
+import traceback
 
 class PResolver:
 
@@ -134,6 +135,7 @@ class PResolver:
                     resolver.calculate_answer(success_callback)
                 except Exception as e:
                     print("发生错误:", e)
+                    traceback.print_exc()
                     print('解题过程中发生错误，可能是题目录入有误，本题【' + question_data.question_key + '】跳过...')
             else:
                 print('题目excel中答案不为空，本题【' + question_data.question_key + '】跳过...')
